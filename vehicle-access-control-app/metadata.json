@@ -1,0 +1,5 @@
+{
+  "name": "Vehicle Access Control System",
+  "description": "A React web application for managing vehicle access, user registration, vehicle tracking, and barcode-based entry/exit logging.",
+  "requestFramePermissions": []
+}
