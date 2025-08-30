@@ -1,5 +1,4 @@
-
-export const API_BASE_URL = "http://localhost:3000"; // Mock API base URL
+export const API_BASE_URL = "http://localhost:3000"; // API real do backend
 
 export enum AppRoutes {
   LOGIN = "/login",

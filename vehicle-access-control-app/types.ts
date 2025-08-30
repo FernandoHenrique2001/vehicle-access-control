@@ -1,9 +1,24 @@
-
 export interface User {
   id: string;
   name: string;
   cpf: string;
+  password?: string; // Opcional - apenas admins têm senha
+  type?: string; // ADMIN ou USER
   createdAt: string;
+}
+
+export interface CreateUserDto {
+  name: string;
+  cpf: string;
+  password?: string; // Opcional
+  type?: string; // ADMIN ou USER
+}
+
+export interface UpdateUserDto {
+  name?: string;
+  cpf?: string;
+  password?: string; // Opcional
+  type?: string; // ADMIN ou USER
 }
 
 export interface Vehicle {
@@ -13,6 +28,16 @@ export interface Vehicle {
   userName?: string; // For display purposes
   createdAt: string;
   barcode?: Barcode; // Optional, might be loaded separately
+}
+
+export interface CreateVehicleDto {
+  userId: string;
+  license: string;
+}
+
+export interface UpdateVehicleDto {
+  userId?: string;
+  license?: string;
 }
 
 export interface Barcode {
@@ -25,19 +50,26 @@ export interface Barcode {
 export interface Entry {
   id: string;
   entryTime: string;
+  barcode: {
+    code: string;
+  };
+  vehicle: {
+    license: string;
+  };
   exitTime?: string | null;
-  vehicleId: string;
+  vehicleId?: string;
   vehicleLicense?: string; // For display
-  barcodeId: string;
+  barcodeId?: string;
   barcodeCode?: string; // For display
 }
 
 export interface AuthResponse {
   token: string;
-  user: { // Assuming admin user details are returned
+  user: {
     id: string;
     cpf: string;
     name?: string; // Optional name for admin
+    type?: string; // ADMIN or USER
   };
 }
 
@@ -64,7 +96,7 @@ export interface ApiError {
 export enum ModalAction {
   CREATE = "CREATE",
   EDIT = "EDIT",
-  VIEW = "VIEW"
+  VIEW = "VIEW",
 }
 
 export interface SelectOption {

@@ -1,5 +1,4 @@
-
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 
 interface Column<T> {
   header: string;
@@ -18,9 +17,15 @@ interface TableProps<T> {
   emptyStateMessage?: string;
 }
 
-const Table = <T extends { id: string | number }>(
-  { columns, data, isLoading, error, renderRowActions, onRowClick, emptyStateMessage = "Nenhum dado encontrado." }: TableProps<T>
-): React.ReactNode => {
+const Table = <T extends { id: string | number }>({
+  columns,
+  data,
+  isLoading,
+  error,
+  renderRowActions,
+  onRowClick,
+  emptyStateMessage = "Nenhum dado encontrado.",
+}: TableProps<T>): React.ReactNode => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center p-10">
@@ -31,12 +36,22 @@ const Table = <T extends { id: string | number }>(
   }
 
   if (error) {
-    return <div className="text-red-500 p-4 bg-red-100 border border-red-300 rounded-md">Erro: {error}</div>;
+    return (
+      <div className="text-red-500 p-4 bg-red-100 border border-red-300 rounded-md">
+        Erro: {error}
+      </div>
+    );
   }
-  
+
   if (!data || data.length === 0) {
-    return <div className="text-center text-gray-500 p-10 border rounded-md bg-white">{emptyStateMessage}</div>;
+    return (
+      <div className="text-center text-gray-500 p-10 border rounded-md bg-white">
+        {emptyStateMessage}
+      </div>
+    );
   }
+
+  console.log({ data });
 
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
@@ -47,13 +62,18 @@ const Table = <T extends { id: string | number }>(
               <th
                 key={index}
                 scope="col"
-                className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${col.headerClassName || ''}`}
+                className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
+                  col.headerClassName || ""
+                }`}
               >
                 {col.header}
               </th>
             ))}
             {renderRowActions && (
-              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Ações
               </th>
             )}
@@ -61,16 +81,28 @@ const Table = <T extends { id: string | number }>(
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {data.map((item) => (
-            <tr 
-              key={item.id} 
-              className={`hover:bg-gray-50 transition-colors ${onRowClick ? 'cursor-pointer' : ''}`}
+            <tr
+              key={item.id}
+              className={`hover:bg-gray-50 transition-colors ${
+                onRowClick ? "cursor-pointer" : ""
+              }`}
               onClick={onRowClick ? () => onRowClick(item) : undefined}
             >
               {columns.map((col, index) => (
-                <td key={index} className={`px-6 py-4 whitespace-nowrap text-sm text-gray-700 ${col.className || ''}`}>
-                  {typeof col.accessor === 'function'
+                <td
+                  key={index}
+                  className={`px-6 py-4 whitespace-nowrap text-sm text-gray-700 ${
+                    col.className || ""
+                  }`}
+                >
+                  {typeof col.accessor === "function"
                     ? col.accessor(item)
-                    : String(item[col.accessor] === null || typeof item[col.accessor] === 'undefined' ? '' : item[col.accessor])}
+                    : String(
+                        item[col.accessor] === null ||
+                          typeof item[col.accessor] === "undefined"
+                          ? ""
+                          : item[col.accessor]
+                      )}
                 </td>
               ))}
               {renderRowActions && (
@@ -87,4 +119,3 @@ const Table = <T extends { id: string | number }>(
 };
 
 export default Table;
-

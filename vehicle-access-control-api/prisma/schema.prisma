@@ -17,7 +17,8 @@ model User {
   id        String    @id @default(uuid())
   name      String
   cpf       String    @unique
-  password  String
+  password  String? // Opcional - apenas admins têm senha
+  type      String    @default("USER") // ADMIN ou USER
   createdAt DateTime  @default(now())
   vehicles  Vehicle[]
 }

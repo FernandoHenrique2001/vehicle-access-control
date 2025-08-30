@@ -15,19 +15,20 @@ async function main() {
       name: 'Admin User',
       cpf: '701.226.686-42',
       password: adminPassword,
+      type: 'ADMIN',
     },
   });
 
   console.log('✅ Usuário admin criado:', admin.name);
 
-  // Criar alguns usuários de exemplo
+  // Criar alguns usuários de exemplo (sem senha - usuários comuns)
   const user1 = await prisma.user.upsert({
     where: { cpf: '111.111.111-11' },
     update: {},
     create: {
       name: 'Alice Wonderland',
       cpf: '111.111.111-11',
-      password: await bcrypt.hash('123456', 10),
+      type: 'USER',
     },
   });
 
@@ -37,7 +38,7 @@ async function main() {
     create: {
       name: 'Bob The Builder',
       cpf: '222.222.222-22',
-      password: await bcrypt.hash('123456', 10),
+      type: 'USER',
     },
   });
 

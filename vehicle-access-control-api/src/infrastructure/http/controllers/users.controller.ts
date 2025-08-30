@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '../../../application/services/users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { User } from '@prisma/client';
+import { CreateUserDto, UpdateUserDto } from '../users/dto/user.dto';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard)
@@ -18,8 +18,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() data: Omit<User, 'id' | 'createdAt'>) {
-    return this.usersService.create(data);
+  create(@Body() createUserDto: any) {
+    console.log('Creating user with data:', createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
   @Get()
@@ -38,11 +39,8 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() data: Partial<Omit<User, 'id' | 'createdAt'>>,
-  ) {
-    return this.usersService.update(id, data);
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
