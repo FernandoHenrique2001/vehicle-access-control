@@ -12,7 +12,7 @@ import { JwtStrategy } from './jwt.strategy';
     PrismaModule,
     PassportModule,
     JwtModule.register({
-      secret: 'yourSecretKey', // TODO: Move to config service
+      secret: 'yourSecretKey',
       signOptions: { expiresIn: '1h' },
     }),
   ],

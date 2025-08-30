@@ -1,98 +1,223 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Vehicle Access Control API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API backend para o sistema de controle de acesso de veículos, desenvolvida com NestJS e Prisma.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Funcionalidades
 
-## Description
+- **Autenticação JWT** com estratégias local e JWT
+- **Gestão de Usuários** - CRUD completo
+- **Gestão de Veículos** - CRUD com vinculação a usuários
+- **Códigos de Barras** - Geração automática para veículos
+- **Controle de Entrada/Saída** - Registro de acessos via código de barras
+- **Dashboard** - Dados estatísticos de acesso
+- **Validação de Dados** - DTOs com validação automática
+- **Banco de Dados** - PostgreSQL com Prisma ORM
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠️ Tecnologias
 
-## Project setup
+- **NestJS** - Framework Node.js
+- **Prisma** - ORM para banco de dados
+- **PostgreSQL** - Banco de dados
+- **JWT** - Autenticação
+- **bcrypt** - Hash de senhas
+- **class-validator** - Validação de dados
 
-```bash
-$ npm install
-```
+## 📋 Pré-requisitos
 
-## Compile and run the project
+- Node.js 18+
+- Docker e Docker Compose
+- npm ou yarn
 
-```bash
-# development
-$ npm run start
+## 🚀 Instalação e Configuração
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
+### 1. Clone o repositório
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone <repository-url>
+cd vehicle-access-control-api
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2. Instale as dependências
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Configure as variáveis de ambiente
 
-## Resources
+Crie um arquivo `.env` na raiz do projeto:
 
-Check out a few resources that may come in handy when working with NestJS:
+```env
+# Database
+DATABASE_URL="postgresql://postgres:postgres@localhost:5433/vehicle_access_control"
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# JWT
+JWT_SECRET="your-super-secret-jwt-key-change-in-production"
+JWT_EXPIRES_IN="1h"
 
-## Support
+# App
+PORT=3000
+NODE_ENV=development
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 4. Inicie o banco de dados
 
-## Stay in touch
+```bash
+docker-compose up -d
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 5. Execute as migrações
 
-## License
+```bash
+npm run db:migrate
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 6. Gere o cliente Prisma
+
+```bash
+npm run db:generate
+```
+
+### 7. Popule o banco com dados iniciais
+
+```bash
+npm run db:seed
+```
+
+### 8. Inicie a aplicação
+
+```bash
+# Desenvolvimento
+npm run start:dev
+
+# Produção
+npm run build
+npm run start:prod
+```
+
+## 📚 Endpoints da API
+
+### Autenticação
+
+- `POST /auth/login` - Login de usuário
+
+### Usuários
+
+- `GET /users` - Listar todos os usuários
+- `GET /users/:id` - Buscar usuário por ID
+- `POST /users` - Criar usuário
+- `PATCH /users/:id` - Atualizar usuário
+- `DELETE /users/:id` - Deletar usuário
+- `GET /users/options` - Listar opções de usuários (para selects)
+
+### Veículos
+
+- `GET /vehicles` - Listar todos os veículos
+- `GET /vehicles/:id` - Buscar veículo por ID
+- `POST /vehicles` - Criar veículo
+- `PATCH /vehicles/:id` - Atualizar veículo
+- `DELETE /vehicles/:id` - Deletar veículo
+
+### Códigos de Barras
+
+- `POST /barcodes/generate/:vehicleId` - Gerar código de barras para veículo
+- `GET /barcodes/vehicle/:vehicleId` - Buscar código de barras por veículo
+- `GET /barcodes/code/:code` - Buscar código de barras por código (público)
+
+### Entradas
+
+- `GET /entries` - Listar todas as entradas (com filtros opcionais)
+- `POST /entries/scan/:barcodeCode` - Escanear código de barras (público)
+- `GET /entries/dashboard` - Dados do dashboard
+
+## 🔐 Autenticação
+
+A API usa JWT para autenticação. Para endpoints protegidos, inclua o header:
+
+```
+Authorization: Bearer <token>
+```
+
+### Usuário Admin Padrão
+
+- **CPF**: 701.226.686-42
+- **Senha**: 123456
+
+## 🗄️ Estrutura do Banco
+
+### Tabelas
+
+- **users** - Usuários do sistema
+- **vehicles** - Veículos cadastrados
+- **barcodes** - Códigos de barras dos veículos
+- **entries** - Registros de entrada/saída
+
+### Relacionamentos
+
+- Um usuário pode ter múltiplos veículos
+- Um veículo pode ter um código de barras
+- Um código de barras pode ter múltiplas entradas
+- Uma entrada está vinculada a um veículo e um código de barras
+
+## 🧪 Testes
+
+```bash
+# Testes unitários
+npm run test
+
+# Testes e2e
+npm run test:e2e
+
+# Cobertura de testes
+npm run test:cov
+```
+
+## 📊 Comandos Úteis
+
+```bash
+# Gerar cliente Prisma
+npm run db:generate
+
+# Executar migrações
+npm run db:migrate
+
+# Abrir Prisma Studio
+npm run db:studio
+
+# Seed do banco
+npm run db:seed
+```
+
+## 🔧 Desenvolvimento
+
+### Estrutura de Pastas
+
+```
+src/
+├── application/          # Lógica de negócio
+│   └── services/        # Serviços da aplicação
+├── domain/              # Entidades e regras de domínio
+├── infrastructure/      # Implementações externas
+│   ├── database/        # Banco de dados
+│   └── http/            # Controllers e módulos HTTP
+└── main.ts              # Ponto de entrada
+```
+
+### Padrões Utilizados
+
+- **Clean Architecture** - Separação de responsabilidades
+- **Repository Pattern** - Abstração do acesso a dados
+- **DTO Pattern** - Transferência de dados
+- **Guard Pattern** - Proteção de rotas
+
+## 🚨 Notas Importantes
+
+1. **Segurança**: Altere o JWT_SECRET em produção
+2. **CORS**: Configure as origens permitidas conforme necessário
+3. **Validação**: Todos os DTOs são validados automaticamente
+4. **Transações**: Operações críticas usam transações do Prisma
+5. **Logs**: A API inclui logs para debugging
+
+## 📝 Licença
+
+Este projeto é privado e não possui licença pública.
