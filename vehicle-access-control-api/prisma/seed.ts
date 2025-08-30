@@ -10,7 +10,9 @@ async function main() {
   const adminPassword = await bcrypt.hash('123456', 10);
   const admin = await prisma.user.upsert({
     where: { cpf: '701.226.686-42' },
-    update: {},
+    update: {
+      type: 'ADMIN', // Garantir que seja ADMIN
+    },
     create: {
       name: 'Admin User',
       cpf: '701.226.686-42',
@@ -24,7 +26,9 @@ async function main() {
   // Criar alguns usuários de exemplo (sem senha - usuários comuns)
   const user1 = await prisma.user.upsert({
     where: { cpf: '111.111.111-11' },
-    update: {},
+    update: {
+      type: 'USER', // Garantir que seja USER
+    },
     create: {
       name: 'Alice Wonderland',
       cpf: '111.111.111-11',
@@ -34,7 +38,9 @@ async function main() {
 
   const user2 = await prisma.user.upsert({
     where: { cpf: '222.222.222-22' },
-    update: {},
+    update: {
+      type: 'USER', // Garantir que seja USER
+    },
     create: {
       name: 'Bob The Builder',
       cpf: '222.222.222-22',
@@ -43,6 +49,33 @@ async function main() {
   });
 
   console.log('✅ Usuários de exemplo criados');
+
+  // Atualizar tipos de usuários existentes baseado na presença de senha
+  console.log('🔄 Atualizando tipos de usuários existentes...');
+
+  // Usuários com senha devem ser ADMIN
+  await prisma.user.updateMany({
+    where: {
+      password: { not: null },
+      type: 'USER',
+    },
+    data: {
+      type: 'ADMIN',
+    },
+  });
+
+  // Usuários sem senha devem ser USER
+  await prisma.user.updateMany({
+    where: {
+      password: null,
+      type: 'ADMIN',
+    },
+    data: {
+      type: 'USER',
+    },
+  });
+
+  console.log('✅ Tipos de usuários atualizados');
 
   // Criar veículos
   const vehicle1 = await prisma.vehicle.upsert({
