@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000"; // API real do backend
+export const API_BASE_URL = process.env.API_BASE_URL; // API real do backend
 
 export enum AppRoutes {
   LOGIN = "/login",
